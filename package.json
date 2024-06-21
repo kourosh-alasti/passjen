@@ -1,0 +1,39 @@
+{
+  "name": "@kourosh-alasti/pwd-gen",
+  "version": "0.0.1",
+  "description": "AlastiSolutions Password Generator Lib",
+  "exports": {
+    "types": "./src/index.d.ts",
+    "default":"./main.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./src/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "typescript",
+    "password",
+    "generate",
+    "unique",
+    "generator"
+  ],
+  "author": "Kourosh Alasti <coding@kouroshalasti.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alastisolutions/pwd-gen/issues"
+  },
+  "homepage": "https://github.com/alastisolutions/pwd-gen",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/alastisolutions/pwd-gen"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.7",
+    "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "check-password-strength": "^2.0.10",
+    "generate-password-browser": "^1.1.0"
+  }
+}
