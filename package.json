@@ -2,12 +2,12 @@
   "name": "@kourosh-alasti/pwd-gen",
   "version": "0.0.1",
   "description": "AlastiSolutions Password Generator Lib",
-  "exports": {
-    "types": "./src/index.d.ts",
-    "default":"./main.js"
+  "private": "false",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "pwd-gen": "dist/index.js"
   },
-  "main": "./dist/index.js",
-  "types": "./src/index.d.ts",
   "scripts": {
     "build": "tsc"
   },
@@ -26,7 +26,7 @@
   "homepage": "https://github.com/alastisolutions/pwd-gen",
   "repository": {
     "type": "github",
-    "url": "https://github.com/alastisolutions/pwd-gen"
+    "url": "git+https://github.com/alastisolutions/pwd-gen.git"
   },
   "devDependencies": {
     "@types/node": "^20.14.7",
