@@ -7,19 +7,19 @@ This package provides a collection of functions for generating and hashing passw
 To install the package, you can use npm or yarn:
 
 ```bash
-npm install @alastisolutions/pwd-gen
+npm install @kourosh-alasti/pwd-gen
 ```
 
 or
 
 ```bash
-pnpm add @alastisolutions/pwd-gen
+pnpm add @kourosh-alasti/pwd-gen
 ```
 
 or
 
 ```bash
-yarn add @alastisolutions/pwd-gen
+yarn add @kourosh-alasti/pwd-gen
 ```
 
 ## Usage
@@ -31,9 +31,9 @@ The package exports the following functions:
 Generates a password based on the provided options.
 
 ```typescript
-import { generate } from "@alastisolutions/pwd-gen";
+import generator from "@kourosh-alasti/pwd-gen";
 
-const generatedPassword = generate({
+const generatedPassword = generator.generate({
   characterLength: 12,
   useNumbers: true,
   useSymbols: true,
@@ -59,9 +59,9 @@ console.log(generatedPassword);
 Generates multiple passwords based on the provided options.
 
 ```typescript
-import { generateMultiple } from "@alastisolutions/pwd-gen";
+import generator from "@kourosh-alasti/pwd-gen";
 
-const generatedPasswords = generateMultiple({
+const generatedPasswords = generator.generateMultiple({
   count: 5,
   options: {
     characterLength: 10,
@@ -93,9 +93,9 @@ console.log(generatedPasswords);
 Generates a hashed password using bcrypt in a synchronous manner.
 
 ```typescript
-import { generateHashedPasswordSync } from "@alastisolutions/pwd-gen";
+import generator from "@kourosh-alasti/pwd-gen";
 
-const hashedPassword = generateHashedPasswordSync({
+const hashedPassword = generator.generateHashedPasswordSync({
   options: {
     characterLength: 8,
     useNumbers: true,
@@ -126,9 +126,9 @@ console.log(hashedPassword);
 Compares a password with its hashed version using bcrypt in a synchronous manner.
 
 ```typescript
-import { compareHashedPasswordSync } from "@alastisolutions/pwd-gen";
+import generator from "@kourosh-alasti/pwd-gen";
 
-const isMatch = compareHashedPasswordSync({
+const isMatch = generator.compareHashedPasswordSync({
   password: "Passw0rd",
   hashedPassword: "$2b$12$... (hashed password)",
 });
@@ -148,10 +148,10 @@ console.log(isMatch);
 Generates a hashed password using bcrypt in an asynchronous manner.
 
 ```typescript
-import { generateHashedPassword } from "@alastisolutions/pwd-gen";
+import generator from "@kourosh-alasti/pwd-gen";
 
 (async () => {
-  const hashedPassword = await generateHashedPassword({
+  const hashedPassword = await generator.generateHashedPassword({
     options: {
       characterLength: 8,
       useNumbers: true,
@@ -183,10 +183,10 @@ import { generateHashedPassword } from "@alastisolutions/pwd-gen";
 Compares a password with its hashed version using bcrypt in an asynchronous manner.
 
 ```typescript
-import { compareHashedPassword } from "@alastisolutions/pwd-gen";
+import generator from "@kourosh-alasti/pwd-gen";
 
 (async () => {
-  const isMatch = await compareHashedPassword({
+  const isMatch = await generator.compareHashedPassword({
     password: "Passw0rd",
     hashedPassword: "$2b$12$... (hashed password)",
   });
