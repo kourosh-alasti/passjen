@@ -1,4 +1,9 @@
+
+# NPM Packages
 node_modules
+
+# Git Config Files
 .git
 
+# Build Output
 dist
