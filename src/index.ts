@@ -1,4 +1,5 @@
 import generator from "generate-password-browser";
+import bcrypt from "bcrypt";
 import { Result, passwordStrength } from "check-password-strength";
 
 interface GenerateParams {
@@ -88,4 +89,72 @@ export const generateMultiple = ({
   }
 
   return passwords;
+};
+
+export const generateHashedPasswordSync = ({
+  options,
+  saltRounds = 10,
+}: {
+  options: GenerateParams;
+  saltRounds: number;
+}) => {
+  const password: GeneratedPassword = generate({ ...options });
+
+  const hashed: string = bcrypt.hashSync(password.password, saltRounds);
+
+  return {
+    ...password,
+    hashedPassword: hashed,
+    salt: saltRounds,
+  };
+};
+
+export const compareHashedPasswordSync = ({
+  password,
+  hashedPassword,
+}: {
+  password: string;
+  hashedPassword: string;
+}) => {
+  const isMatch: boolean = bcrypt.compareSync(password, hashedPassword);
+
+  return {
+    password,
+    hashedPassword,
+    isMatch,
+  };
+};
+
+export const generateHashedPassword = async ({
+  options,
+  saltRounds = 10,
+}: {
+  options: GenerateParams;
+  saltRounds: number;
+}) => {
+  const password: GeneratedPassword = generate({ ...options });
+
+  const hashed: string = await bcrypt.hash(password.password, saltRounds);
+
+  return {
+    ...password,
+    hashedPassword: hashed,
+    salt: saltRounds,
+  };
+};
+
+export const compareHashedPassword = async ({
+  password,
+  hashedPassword,
+}: {
+  password: string;
+  hashedPassword: string;
+}) => {
+  const isMatch: boolean = await bcrypt.compare(password, hashedPassword);
+
+  return {
+    password,
+    hashedPassword,
+    isMatch,
+  };
 };
