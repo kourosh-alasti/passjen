@@ -4,7 +4,7 @@
 
 If you discover a vulnerability in this package, please report it to the project maintainers privately. You can use the following contact information:
 
-- Email: security@alastisolutions.org
+- Email: <security@alastisolutions.org>
 
 Please do not publicly disclose the vulnerability until it has been addressed and a fix has been released.
 
