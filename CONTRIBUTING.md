@@ -19,4 +19,4 @@ Thank you for contributing to this project! We appreciate your help in making it
 
 ## Author
 
-This contributing guide was published by Kourosh Alasti
+This contributing guide was published by Kourosh Alasti <coding@kouroshalasti.com>
