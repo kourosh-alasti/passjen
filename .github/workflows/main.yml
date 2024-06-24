@@ -3,7 +3,9 @@
 
 name: Publish PNPM Package to NPM
 
-on: workflow_dispatch
+on:
+  release:
+    types: [created]
 
 jobs:
   build:
