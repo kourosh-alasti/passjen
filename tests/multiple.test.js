@@ -1,10 +1,10 @@
 import { describe } from "@jest/globals";
-import generator from "../main";
+import { generateMultiple } from "../main";
 import { expect } from "@jest/globals";
 
 describe("Generate Multiple Passwords Suite", () => {
   test("generates 10 passwords", () => {
-    const passwords = generator.generateMultiple({
+    const passwords = generateMultiple({
       count: 10,
       options: {
         characterLength: 10,

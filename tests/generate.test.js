@@ -1,4 +1,4 @@
-import generator from "../main";
+import { generate } from "../main";
 import {
   isANumber,
   isOnlySpecialCharacters,
@@ -10,7 +10,7 @@ import { describe, expect, test } from "@jest/globals";
 
 describe("Generate Password Suite", () => {
   test("generates a strong password of length 15", () => {
-    const { password, passwordLength, passwordStrength } = generator.generate({
+    const { password, passwordLength, passwordStrength } = generate({
       characterLength: 15,
       useNumbers: true,
       useSymbols: true,
@@ -27,7 +27,7 @@ describe("Generate Password Suite", () => {
   });
 
   test("generates a weak password of length 6", () => {
-    const { password, passwordLength, passwordStrength } = generator.generate({
+    const { password, passwordLength, passwordStrength } = generate({
       characterLength: 6,
       useNumbers: false,
       useSymbols: false,
@@ -44,7 +44,7 @@ describe("Generate Password Suite", () => {
   });
 
   test("generates a password with only numbers of length 10", () => {
-    const { password, passwordLength, passwordStrength } = generator.generate({
+    const { password, passwordLength, passwordStrength } = generate({
       characterLength: 10,
       useNumbers: true,
       useSymbols: false,
@@ -62,7 +62,7 @@ describe("Generate Password Suite", () => {
   });
 
   test("generate a password with only symbols of length 10", () => {
-    const { password, passwordLength, passwordStrength } = generator.generate({
+    const { password, passwordLength, passwordStrength } = generate({
       characterLength: 10,
       useNumbers: false,
       useSymbols: true,
@@ -80,7 +80,7 @@ describe("Generate Password Suite", () => {
   });
 
   test("generate a password with only lowercase letters of length 10", () => {
-    const { password, passwordLength, passwordStrength } = generator.generate({
+    const { password, passwordLength, passwordStrength } = generate({
       characterLength: 10,
       useNumbers: false,
       useSymbols: false,
@@ -99,7 +99,7 @@ describe("Generate Password Suite", () => {
   });
 
   test("generate a password with only uppercase letters of length 10", () => {
-    const { password, passwordLength, passwordStrength } = generator.generate({
+    const { password, passwordLength, passwordStrength } = generate({
       characterLength: 10,
       useNumbers: false,
       useSymbols: false,
@@ -118,7 +118,7 @@ describe("Generate Password Suite", () => {
   });
 
   test("generate a password without similar characters of length 10", () => {
-    const { password, passwordLength, passwordStrength } = generator.generate({
+    const { password, passwordLength, passwordStrength } = generate({
       characterLength: 14,
       useNumbers: true,
       useSymbols: true,
