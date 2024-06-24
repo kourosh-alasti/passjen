@@ -1,6 +1,8 @@
+Certainly! Here's an updated README file that includes all the new functions from the package:
+
 # Password Generator and Hasher
 
-This package provides a collection of functions for generating and hashing passwords, along with password strength evaluation. It utilizes the `generate-password-browser`, `bcrypt`, and `check-password-strength` libraries.
+A package that provides functions for generating and hashing passwords, along with password strength evaluation. It uses the `generate-password-browser`, `bcrypt`, and `check-password-strength` libraries.
 
 ## Installation
 
@@ -30,181 +32,169 @@ The package exports the following functions:
 
 Generates a password based on the provided options.
 
-```typescript
-import generator from "@kourosh-alasti/pwd-gen";
+```javascript
+import { generate } from "@kourosh-alasti/pwd-gen";
 
-const generatedPassword = generator.generate({
+const options = {
   characterLength: 12,
   useNumbers: true,
   useSymbols: true,
   useLowercaseLetters: true,
   useUppercaseLetters: true,
   excludeSimilarCharacters: true,
-  excludeTheseCharacters: "!@#$%^&*()",
+  excludeTheseCharacters: "",
   strictCharacters: true,
-});
+};
 
-console.log(generatedPassword);
-/*
-{
-  password: 'P@ssw0rd123!',
-  passwordStrength: 'Strong',
-  passwordLength: 12
-}
-*/
+const password = generate(options);
+console.log(password);
 ```
 
 ### `generateMultiple`
 
 Generates multiple passwords based on the provided options.
 
-```typescript
-import generator from "@kourosh-alasti/pwd-gen";
+```javascript
+import { generateMultiple } from "@kourosh-alasti/pwd-gen";
 
-const generatedPasswords = generator.generateMultiple({
-  count: 5,
-  options: {
-    characterLength: 10,
-    useNumbers: true,
-    useSymbols: true,
-    useLowercaseLetters: true,
-    useUppercaseLetters: true,
-    excludeSimilarCharacters: true,
-    excludeTheseCharacters: "!@#$%^&*()",
-    strictCharacters: true,
-  },
-});
+const options = {
+  characterLength: 12,
+  useNumbers: true,
+  useSymbols: true,
+  useLowercaseLetters: true,
+  useUppercaseLetters: true,
+  excludeSimilarCharacters: true,
+  excludeTheseCharacters: "",
+  strictCharacters: true,
+};
 
-console.log(generatedPasswords);
-/*
-[
-  {
-    password: 'P@ssw0rd1!',
-    passwordStrength: 'Strong',
-    passwordLength: 10
-  },
-  // ... (4 more passwords)
-]
-*/
+const passwords = generateMultiple(5, options);
+console.log(passwords);
 ```
 
 ### `generateHashedPasswordSync`
 
 Generates a hashed password using bcrypt in a synchronous manner.
 
-```typescript
-import generator from "@kourosh-alasti/pwd-gen";
+```javascript
+import { generateHashedPasswordSync } from "@kourosh-alasti/pwd-gen";
 
-const hashedPassword = generator.generateHashedPasswordSync({
-  options: {
-    characterLength: 8,
-    useNumbers: true,
-    useSymbols: false,
-    useLowercaseLetters: true,
-    useUppercaseLetters: true,
-    excludeSimilarCharacters: false,
-    excludeTheseCharacters: "",
-    strictCharacters: false,
-  },
-  saltRounds: 12,
-});
+const options = {
+  characterLength: 12,
+  useNumbers: true,
+  useSymbols: true,
+  useLowercaseLetters: true,
+  useUppercaseLetters: true,
+  excludeSimilarCharacters: true,
+  excludeTheseCharacters: "",
+  strictCharacters: true,
+};
+
+const {
+  hashedPassword,
+  passwordStrength,
+  passwordLength,
+  hashedPassword,
+  salt,
+} = generateHashedPasswordSync({ options, saltRounds: 10 });
 
 console.log(hashedPassword);
-/*
-{
-  password: 'Passw0rd',
-  passwordStrength: 'Strong',
-  passwordLength: 8,
-  hashedPassword: '$2b$12$... (hashed password)',
-  salt: 12
-}
-*/
 ```
 
 ### `compareHashedPasswordSync`
 
 Compares a password with its hashed version using bcrypt in a synchronous manner.
 
-```typescript
-import generator from "@kourosh-alasti/pwd-gen";
+```javascript
+import { compareHashedPasswordSync } from "@kourosh-alasti/pwd-gen";
 
-const isMatch = generator.compareHashedPasswordSync({
-  password: "Passw0rd",
-  hashedPassword: "$2b$12$... (hashed password)",
-});
+const hashedPassword = "$2b$10$..."; // Replace with the actual hashed password
+const password = "userPassword";
 
+const { password, hashedPassword, isMatch } = compareHashedPasswordSync(
+  password,
+  hashedPassword
+);
 console.log(isMatch);
-/*
-{
-  password: 'Passw0rd',
-  hashedPassword: '$2b$12$... (hashed password)',
-  isMatch: true
-}
-*/
 ```
 
 ### `generateHashedPassword`
 
 Generates a hashed password using bcrypt in an asynchronous manner.
 
-```typescript
-import generator from "@kourosh-alasti/pwd-gen";
+```javascript
+import { generateHashedPassword } from "@kourosh-alasti/pwd-gen";
 
-(async () => {
-  const hashedPassword = await generator.generateHashedPassword({
-    options: {
-      characterLength: 8,
-      useNumbers: true,
-      useSymbols: false,
-      useLowercaseLetters: true,
-      useUppercaseLetters: true,
-      excludeSimilarCharacters: false,
-      excludeTheseCharacters: "",
-      strictCharacters: false,
-    },
-    saltRounds: 12,
-  });
+const options = {
+  characterLength: 12,
+  useNumbers: true,
+  useSymbols: true,
+  useLowercaseLetters: true,
+  useUppercaseLetters: true,
+  excludeSimilarCharacters: true,
+  excludeTheseCharacters: "",
+  strictCharacters: true,
+};
 
-  console.log(hashedPassword);
-  /*
-  {
-    password: 'Passw0rd',
-    passwordStrength: 'Strong',
-    passwordLength: 8,
-    hashedPassword: '$2b$12$... (hashed password)',
-    salt: 12
-  }
-  */
-})();
+const {
+  hashedPassword,
+  passwordStrength,
+  passwordLength,
+  hashedPassword,
+  salt,
+} = await generateHashedPassword({ options, saltRounds: 10 });
+
+console.log(hashedPassword);
 ```
 
 ### `compareHashedPassword`
 
 Compares a password with its hashed version using bcrypt in an asynchronous manner.
 
-```typescript
-import generator from "@kourosh-alasti/pwd-gen";
+```javascript
+import { compareHashedPassword } from "@kourosh-alasti/pwd-gen";
 
-(async () => {
-  const isMatch = await generator.compareHashedPassword({
-    password: "Passw0rd",
-    hashedPassword: "$2b$12$... (hashed password)",
-  });
+const hashedPassword = "$2b$10$..."; // Replace with the actual hashed password
+const password = "userPassword";
 
-  console.log(isMatch);
-  /*
-  {
-    password: 'Passw0rd',
-    hashedPassword: '$2b$12$... (hashed password)',
-    isMatch: true
-  }
-  */
-})();
+const { password, hashedPassword, isMatch } = await compareHashedPassword(
+  password,
+  hashedPassword
+);
+console.log(isMatch);
+```
+
+### `hash`
+
+Hashes a password using bcrypt in an asynchronous manner.
+
+```javascript
+import { hash } from "@kourosh-alasti/pwd-gen";
+
+const pass = "userPassword";
+const saltRounds = 10;
+
+const { password, hashedPassword } = await hash(pass, saltRounds);
+console.log(hashedPassword);
+```
+
+### `hashSync`
+
+Hashes a password using bcrypt in a synchronous manner.
+
+```javascript
+import { hashSync } from "@kourosh-alasti/pwd-gen";
+
+const password = "userPassword";
+const saltRounds = 10;
+
+const { password, hashedPassword } = hashSync(password, saltRounds);
+console.log(hashedPassword);
 ```
 
 ## Contributing
 
-Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
+Contributions are welcome. If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
 
 ## License
 
@@ -212,4 +202,19 @@ This package is licensed under the MIT License.
 
 ## Author
 
-This package was developed by Kourosh Alasti <coding@kouroshalasti.com>
+This package was developed by Kourosh Alasti <coding@kouroshalasti.com>.
+
+## Project Structure
+
+The project is organized into a root directory containing several essential files and two main directories: 'src' and 'tests'. The root directory also includes several Markdown files (CODE_OF_CONDUCT.md, CONTRIBUTING.md, LICENSE, README.md, and SECURITY.md) that provide important information about the project.
+
+Key Directories and Files:
+
+1. **'src' Directory:** This directory contains the main source code files for the project. It includes two JavaScript files: 'index.d.ts' (a TypeScript declaration file) and 'index.ts' (the main TypeScript file).
+2. **'tests' Directory:** This directory contains several test files for the project, organized by functionality. The 'tests' directory includes several JavaScript test files: 'compare-hash.test.js', 'generate-hash.test.js', 'generate.test.js', 'hash.test.js', 'multiple.test.js', and 'utility.js'.
+3. **'package.json' and 'pnpm-lock.yaml':** These files are essential for managing dependencies and package lock information for the project.
+4. **'babel.config.cjs' and 'tsconfig.json':** These are configuration files for Babel and TypeScript, respectively, which help in transpiling and type-checking the code.
+5. **'example.js' and 'main.js':** These are two additional JavaScript files in the root directory, which might be entry points for the application or contain additional code snippets.
+
+Notable Aspects:
+The project follows a clear separation of concerns, with the 'src' directory containing the main source code and the 'tests' directory containing the test files. The use of TypeScript and Babel configuration files indicates that the project may involve complex JavaScript code and requires transpilation and type-checking. The inclusion of several Markdown files in the root directory suggests that the project values clear communication and adheres to best practices for open-source projects.
