@@ -1,5 +1,3 @@
-Certainly! Here's an updated README file that includes all the new functions from the package:
-
 # Password Generator and Hasher
 
 A package that provides functions for generating and hashing passwords, along with password strength evaluation. It uses the `generate-password-browser`, `bcrypt`, and `check-password-strength` libraries.
