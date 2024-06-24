@@ -2,22 +2,30 @@ const SPECIAL_CHAR_REGEX = /^[^a-zA-Z0-9]+$/;
 const NUMBER_REGEX = /\D/;
 const ALPHABET_REGEX = /^[a-zA-Z]+$/;
 
-export const isANumber = (value) => {
+const isANumber = (value) => {
   return !NUMBER_REGEX.test(value);
 };
 
-export const isOnlySpecialCharacters = (value) => {
+const isOnlySpecialCharacters = (value) => {
   return SPECIAL_CHAR_REGEX.test(value);
 };
 
-export const isLowercase = (value) => {
+const isLowercase = (value) => {
   return value === String(value).toLowerCase();
 };
 
-export const isUppercase = (value) => {
+const isUppercase = (value) => {
   return value === String(value).toUpperCase();
 };
 
-export const isAlphabet = (value) => {
+const isAlphabet = (value) => {
   return ALPHABET_REGEX.test(value);
+};
+
+export {
+  isANumber,
+  isOnlySpecialCharacters,
+  isLowercase,
+  isUppercase,
+  isAlphabet,
 };
