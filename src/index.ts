@@ -19,7 +19,7 @@ interface GeneratedPassword {
   passwordLength: number;
 }
 
-export const generate = ({
+const generate = ({
   characterLength = 6,
   useNumbers = false,
   useSymbols = false,
@@ -56,7 +56,7 @@ export const generate = ({
   }
 };
 
-export const generateMultiple = ({
+const generateMultiple = ({
   count = 1,
   options: {
     characterLength = 6,
@@ -91,7 +91,7 @@ export const generateMultiple = ({
   return passwords;
 };
 
-export const generateHashedPasswordSync = ({
+const generateHashedPasswordSync = ({
   options,
   saltRounds = 10,
 }: {
@@ -109,7 +109,7 @@ export const generateHashedPasswordSync = ({
   };
 };
 
-export const compareHashedPasswordSync = ({
+const compareHashedPasswordSync = ({
   password,
   hashedPassword,
 }: {
@@ -125,7 +125,7 @@ export const compareHashedPasswordSync = ({
   };
 };
 
-export const generateHashedPassword = async ({
+const generateHashedPassword = async ({
   options,
   saltRounds = 10,
 }: {
@@ -143,7 +143,7 @@ export const generateHashedPassword = async ({
   };
 };
 
-export const compareHashedPassword = async ({
+const compareHashedPassword = async ({
   password,
   hashedPassword,
 }: {
@@ -157,4 +157,35 @@ export const compareHashedPassword = async ({
     hashedPassword,
     isMatch,
   };
+};
+
+const hash = async (password: string, saltRounds = 10) => {
+  const hashedPwd = await bcrypt.hash(password, saltRounds);
+
+  return {
+    hashedPassword: hashedPwd,
+    password: password,
+    saltRounds: saltRounds,
+  };
+};
+
+const hashSync = (password: string, saltRounds = 10) => {
+  const hashedPwd = bcrypt.hashSync(password, saltRounds);
+
+  return {
+    hashedPassword: hashedPwd,
+    password: password,
+    saltRounds: saltRounds,
+  };
+};
+
+export {
+  generate,
+  generateMultiple,
+  generateHashedPasswordSync,
+  compareHashedPasswordSync,
+  generateHashedPassword,
+  compareHashedPassword,
+  hash,
+  hashSync,
 };
