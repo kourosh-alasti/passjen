@@ -1,6 +1,6 @@
 {
   "name": "@kourosh-alasti/pwd-gen",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "AlastiSolutions Password Generator Lib",
   "main": "index.js",
   "type": "module",
