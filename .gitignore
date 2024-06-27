@@ -1,9 +1,8 @@
+# Build Files
+/dist
 
-# NPM Packages
-node_modules
+# Node Packages
+/node_modules
 
-# Git Config Files
-.git
-
-# Build Output
-dist
+# Git Config
+/.git

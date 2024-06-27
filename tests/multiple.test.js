@@ -1,5 +1,5 @@
 import { describe } from "@jest/globals";
-import { generateMultiple } from "../main";
+import { generateMultiple } from "../src";
 import { expect } from "@jest/globals";
 
 describe("Generate Multiple Passwords Suite", () => {

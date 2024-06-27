@@ -1,49 +1,47 @@
 {
   "name": "@kourosh-alasti/pwd-gen",
-  "version": "1.1.5",
-  "description": "AlastiSolutions Password Generator Lib",
-  "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "prepare": "husky",
-    "test": "jest"
-  },
+  "version": "1.2.0",
+  "description": "Password Generator and Hasher for Node.JS",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "LICENSE",
-    "README.md",
-    "package.json"
+    "dist"
   ],
+  "scripts": {
+    "build": "tsup",
+    "test": "jest",
+    "prepare": "husky"
+  },
   "keywords": [
     "typescript",
     "password",
-    "generate",
-    "unique",
-    "generator"
+    "generator",
+    "hasher",
+    "password-generator"
   ],
   "author": "Kourosh Alasti <coding@kouroshalasti.com>",
-  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alastisolutions/pwd-gen/issues"
+    "url": "https://github.com/kouroshalasti/pwd-gen/issues"
   },
-  "homepage": "https://github.com/alastisolutions/pwd-gen",
+  "homepage": "https://github.com/kouroshalasti/pwd-gen",
   "repository": {
     "type": "github",
-    "url": "git+https://github.com/alastisolutions/pwd-gen.git"
+    "url": "https://github.com/kouroshalasti/pwd-gen"
   },
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.24.7",
     "@babel/preset-env": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
     "@jest/globals": "^29.7.0",
     "@types/bcrypt": "^5.0.2",
-    "@types/node": "^20.14.7",
-    "babel-jest": "^29.7.0",
+    "@types/jest": "^29.5.12",
     "husky": "^9.0.11",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.5",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.1.0",
     "typescript": "^5.5.2"
   },
   "dependencies": {

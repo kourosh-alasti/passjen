@@ -1,4 +1,4 @@
-import { compareHashedPassword, compareHashedPasswordSync } from "../main";
+import { compareHashedPassword, compareHashedPasswordSync } from "../src";
 import { describe, expect, test } from "@jest/globals";
 
 describe("Compare Hashed Password Suite", () => {

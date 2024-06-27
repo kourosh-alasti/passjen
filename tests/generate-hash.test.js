@@ -1,4 +1,4 @@
-import { generateHashedPassword, generateHashedPasswordSync } from "../main";
+import { generateHashedPassword, generateHashedPasswordSync } from "../src";
 import { describe, expect, test } from "@jest/globals";
 
 describe("Generate Hashed Password Suite", () => {
@@ -9,11 +9,11 @@ describe("Generate Hashed Password Suite", () => {
           characterLength: 15,
           useNumbers: true,
           useSymbols: true,
-          useLowercaseLetters: true,
-          useUppercaseLetters: true,
+          useLowercase: true,
+          useUppercase: true,
           excludeSimilarCharacters: true,
           excludeTheseCharacters: "",
-          strictCharacters: true,
+          useStrict: true,
         },
       });
 
@@ -33,11 +33,11 @@ describe("Generate Hashed Password Suite", () => {
           characterLength: 15,
           useNumbers: true,
           useSymbols: true,
-          useLowercaseLetters: true,
-          useUppercaseLetters: true,
+          useLowercase: true,
+          useUppercase: true,
           excludeSimilarCharacters: true,
           excludeTheseCharacters: "",
-          strictCharacters: true,
+          useStrict: true,
         },
         saltRounds: 14,
       });

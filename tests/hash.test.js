@@ -1,4 +1,4 @@
-import { hash, hashSync } from "../main";
+import { hash, hashSync } from "../src";
 import { describe, expect, test } from "@jest/globals";
 
 describe("Hashing Suite", () => {
