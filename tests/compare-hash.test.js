@@ -1,15 +1,16 @@
-import { compareHashedPassword, compareHashedPasswordSync } from "../src";
 import { describe, expect, test } from "@jest/globals";
+import { Hasher } from "../src";
 
 describe("Compare Hashed Password Suite", () => {
   test("Compare hashed password synchronously and matches", () => {
     const pwd = "1?R2M+z[t)$bTY1";
     const hash = "$2b$10$55ZPMGhYysoCA60s0fAZXu0IwLUrHh/wWdzgK4ezK.TCv1CoLxuO2";
 
-    const { password, hashedPassword, isMatch } = compareHashedPasswordSync({
-      password: pwd,
-      hashedPassword: hash,
-    });
+    const { password, hashedPassword, isMatch } =
+      Hasher.compareHashedPasswordSync({
+        password: pwd,
+        hashedPassword: hash,
+      });
 
     expect(password).toBe(pwd);
     expect(hashedPassword).toBe(hash);
@@ -20,10 +21,11 @@ describe("Compare Hashed Password Suite", () => {
     const pwd = "1?R2M+z[t)$bTsdjfl;";
     const hash = "$2b$10$55ZPMGhYysoCA60s0fAZXu0IwLUrHh/wWdzgK4ezK.TCv1CoLxuO2";
 
-    const { password, hashedPassword, isMatch } = compareHashedPasswordSync({
-      password: pwd,
-      hashedPassword: hash,
-    });
+    const { password, hashedPassword, isMatch } =
+      Hasher.compareHashedPasswordSync({
+        password: pwd,
+        hashedPassword: hash,
+      });
 
     expect(password).toBe(pwd);
     expect(hashedPassword).toBe(hash);
@@ -34,10 +36,11 @@ describe("Compare Hashed Password Suite", () => {
     const pwd = "yyG}^ScYzT)8,a<";
     const hash = "$2b$14$0W1uEwiWhC/fyQ6lcKUwyesv4uQ5yEUJRqn3JPsbYzu5g9xR1DYza";
 
-    const { password, hashedPassword, isMatch } = compareHashedPasswordSync({
-      password: pwd,
-      hashedPassword: hash,
-    });
+    const { password, hashedPassword, isMatch } =
+      Hasher.compareHashedPasswordSync({
+        password: pwd,
+        hashedPassword: hash,
+      });
 
     expect(password).toBe(pwd);
     expect(hashedPassword).toBe(hash);
@@ -48,10 +51,11 @@ describe("Compare Hashed Password Suite", () => {
     const pwd = "yyG}^ScYzT)8,a<sdfsdf";
     const hash = "$2b$14$0W1uEwiWhC/fyQ6lcKUwyesv4uQ5yEUJRqn3JPsbYzu5g9xR1DYza";
 
-    const { password, hashedPassword, isMatch } = compareHashedPasswordSync({
-      password: pwd,
-      hashedPassword: hash,
-    });
+    const { password, hashedPassword, isMatch } =
+      Hasher.compareHashedPasswordSync({
+        password: pwd,
+        hashedPassword: hash,
+      });
 
     expect(password).toBe(pwd);
     expect(hashedPassword).toBe(hash);
@@ -62,10 +66,11 @@ describe("Compare Hashed Password Suite", () => {
     const pwd = "1?R2M+z[t)$bTY1";
     const hash = "$2b$10$55ZPMGhYysoCA60s0fAZXu0IwLUrHh/wWdzgK4ezK.TCv1CoLxuO2";
 
-    const { password, hashedPassword, isMatch } = await compareHashedPassword({
-      password: pwd,
-      hashedPassword: hash,
-    });
+    const { password, hashedPassword, isMatch } =
+      await Hasher.compareHashedPassword({
+        password: pwd,
+        hashedPassword: hash,
+      });
 
     expect(password).toBe(pwd);
     expect(hashedPassword).toBe(hash);
@@ -76,10 +81,11 @@ describe("Compare Hashed Password Suite", () => {
     const pwd = "1?R2M+z[t)$bTsdjfl;";
     const hash = "$2b$10$55ZPMGhYysoCA60s0fAZXu0IwLUrHh/wWdzgK4ezK.TCv1CoLxuO2";
 
-    const { password, hashedPassword, isMatch } = await compareHashedPassword({
-      password: pwd,
-      hashedPassword: hash,
-    });
+    const { password, hashedPassword, isMatch } =
+      await Hasher.compareHashedPassword({
+        password: pwd,
+        hashedPassword: hash,
+      });
 
     expect(password).toBe(pwd);
     expect(hashedPassword).toBe(hash);
@@ -90,10 +96,11 @@ describe("Compare Hashed Password Suite", () => {
     const pwd = "yyG}^ScYzT)8,a<";
     const hash = "$2b$14$0W1uEwiWhC/fyQ6lcKUwyesv4uQ5yEUJRqn3JPsbYzu5g9xR1DYza";
 
-    const { password, hashedPassword, isMatch } = await compareHashedPassword({
-      password: pwd,
-      hashedPassword: hash,
-    });
+    const { password, hashedPassword, isMatch } =
+      await Hasher.compareHashedPassword({
+        password: pwd,
+        hashedPassword: hash,
+      });
 
     expect(password).toBe(pwd);
     expect(hashedPassword).toBe(hash);
@@ -104,10 +111,11 @@ describe("Compare Hashed Password Suite", () => {
     const pwd = "yyG}^ScYzT)8,a<sdfsdf";
     const hash = "$2b$14$0W1uEwiWhC/fyQ6lcKUwyesv4uQ5yEUJRqn3JPsbYzu5g9xR1DYza";
 
-    const { password, hashedPassword, isMatch } = await compareHashedPassword({
-      password: pwd,
-      hashedPassword: hash,
-    });
+    const { password, hashedPassword, isMatch } =
+      await Hasher.compareHashedPassword({
+        password: pwd,
+        hashedPassword: hash,
+      });
 
     expect(password).toBe(pwd);
     expect(hashedPassword).toBe(hash);

@@ -1,9 +1,10 @@
-import { hash, hashSync } from "../src";
+import { Hasher } from "../src";
 import { describe, expect, test } from "@jest/globals";
 
 describe("Hashing Suite", () => {
   test("hashes a password with default salt synchronously", () => {
-    const { hashedPassword, password, saltRounds } = hashSync("testPassword");
+    const { hashedPassword, password, saltRounds } =
+      Hasher.hashSync("testPassword");
 
     expect(password).toBe("testPassword");
     expect(hashedPassword).not.toBe("testPassword");
@@ -12,7 +13,7 @@ describe("Hashing Suite", () => {
   });
 
   test("hashes a password with not default salt synchronously", () => {
-    const { hashedPassword, password, saltRounds } = hashSync(
+    const { hashedPassword, password, saltRounds } = Hasher.hashSync(
       "anotherTestPassword",
       20
     );
@@ -24,7 +25,9 @@ describe("Hashing Suite", () => {
   });
 
   test("hashes a password with default salt asynchronously", async () => {
-    const { hashedPassword, password, saltRounds } = await hash("testPassword");
+    const { hashedPassword, password, saltRounds } = await Hasher.hash(
+      "testPassword"
+    );
 
     expect(password).toBe("testPassword");
     expect(hashedPassword).not.toBe("testPassword");
@@ -33,7 +36,7 @@ describe("Hashing Suite", () => {
   });
 
   test("hashes a password with not default salt asynchronously", async () => {
-    const { hashedPassword, password, saltRounds } = await hash(
+    const { hashedPassword, password, saltRounds } = await Hasher.hash(
       "anotherTestPassword",
       13
     );
