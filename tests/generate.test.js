@@ -1,4 +1,4 @@
-import { generate } from "../src";
+import { Generator } from "../src";
 import {
   isANumber,
   isOnlySpecialCharacters,
@@ -10,17 +10,15 @@ import { describe, expect, test } from "@jest/globals";
 
 describe("Generate Password Suite", () => {
   test("generates a strong password of length 15", () => {
-    const { password, passwordLength, passwordStrength } = generate({
-      options: {
-        characterLength: 15,
-        useNumbers: true,
-        useSymbols: true,
-        useLowercase: true,
-        useUppercase: true,
-        excludeSimilarCharacters: true,
-        excludeTheseCharacters: "",
-        useStrict: true,
-      },
+    const { password, passwordLength, passwordStrength } = Generator.generate({
+      characterLength: 15,
+      useNumbers: true,
+      useSymbols: true,
+      useLowercase: true,
+      useUppercase: true,
+      excludeSimilarCharacters: true,
+      excludeTheseCharacters: "",
+      useStrict: true,
     });
 
     expect(passwordLength).toBe(15);
@@ -29,17 +27,15 @@ describe("Generate Password Suite", () => {
   });
 
   test("generates a weak password of length 6", () => {
-    const { password, passwordLength, passwordStrength } = generate({
-      options: {
-        characterLength: 6,
-        useNumbers: false,
-        useSymbols: false,
-        useLowercase: true,
-        useUppercase: false,
-        excludeSimilarCharacters: false,
-        excludeTheseCharacters: "bcdefghijklmnopqrstuvwxyz",
-        useStrict: false,
-      },
+    const { password, passwordLength, passwordStrength } = Generator.generate({
+      characterLength: 6,
+      useNumbers: false,
+      useSymbols: false,
+      useLowercase: true,
+      useUppercase: false,
+      excludeSimilarCharacters: false,
+      excludeTheseCharacters: "bcdefghijklmnopqrstuvwxyz",
+      useStrict: false,
     });
 
     expect(passwordLength).toBe(6);
@@ -48,17 +44,15 @@ describe("Generate Password Suite", () => {
   });
 
   test("generates a password with only numbers of length 10", () => {
-    const { password, passwordLength, passwordStrength } = generate({
-      options: {
-        characterLength: 10,
-        useNumbers: true,
-        useSymbols: false,
-        useLowercase: false,
-        useUppercase: false,
-        excludeSimilarCharacters: false,
-        excludeTheseCharacters: "",
-        useStrict: false,
-      },
+    const { password, passwordLength, passwordStrength } = Generator.generate({
+      characterLength: 10,
+      useNumbers: true,
+      useSymbols: false,
+      useLowercase: false,
+      useUppercase: false,
+      excludeSimilarCharacters: false,
+      excludeTheseCharacters: "",
+      useStrict: false,
     });
 
     expect(passwordLength).toBe(10);
@@ -68,17 +62,15 @@ describe("Generate Password Suite", () => {
   });
 
   test("generate a password with only symbols of length 10", () => {
-    const { password, passwordLength, passwordStrength } = generate({
-      options: {
-        characterLength: 10,
-        useNumbers: false,
-        useSymbols: true,
-        useLowercase: false,
-        useUppercase: false,
-        excludeSimilarCharacters: false,
-        excludeTheseCharacters: "",
-        useStrict: false,
-      },
+    const { password, passwordLength, passwordStrength } = Generator.generate({
+      characterLength: 10,
+      useNumbers: false,
+      useSymbols: true,
+      useLowercase: false,
+      useUppercase: false,
+      excludeSimilarCharacters: false,
+      excludeTheseCharacters: "",
+      useStrict: false,
     });
 
     expect(passwordLength).toBe(10);
@@ -88,17 +80,15 @@ describe("Generate Password Suite", () => {
   });
 
   test("generate a password with only lowercase letters of length 10", () => {
-    const { password, passwordLength, passwordStrength } = generate({
-      options: {
-        characterLength: 10,
-        useNumbers: false,
-        useSymbols: false,
-        useLowercase: true,
-        useUppercase: false,
-        excludeSimilarCharacters: false,
-        excludeTheseCharacters: "",
-        useStrict: false,
-      },
+    const { password, passwordLength, passwordStrength } = Generator.generate({
+      characterLength: 10,
+      useNumbers: false,
+      useSymbols: false,
+      useLowercase: true,
+      useUppercase: false,
+      excludeSimilarCharacters: false,
+      excludeTheseCharacters: "",
+      useStrict: false,
     });
 
     expect(passwordLength).toBe(10);
@@ -109,17 +99,15 @@ describe("Generate Password Suite", () => {
   });
 
   test("generate a password with only uppercase letters of length 10", () => {
-    const { password, passwordLength, passwordStrength } = generate({
-      options: {
-        characterLength: 10,
-        useNumbers: false,
-        useSymbols: false,
-        useLowercase: false,
-        useUppercase: true,
-        excludeSimilarCharacters: false,
-        excludeTheseCharacters: "",
-        useStrict: false,
-      },
+    const { password, passwordLength, passwordStrength } = Generator.generate({
+      characterLength: 10,
+      useNumbers: false,
+      useSymbols: false,
+      useLowercase: false,
+      useUppercase: true,
+      excludeSimilarCharacters: false,
+      excludeTheseCharacters: "",
+      useStrict: false,
     });
 
     expect(passwordLength).toBe(10);
@@ -130,17 +118,15 @@ describe("Generate Password Suite", () => {
   });
 
   test("generate a password without similar characters of length 10", () => {
-    const { password, passwordLength, passwordStrength } = generate({
-      options: {
-        characterLength: 14,
-        useNumbers: true,
-        useSymbols: true,
-        useLowercase: true,
-        useUppercase: true,
-        excludeSimilarCharacters: true,
-        excludeTheseCharacters: "",
-        useStrict: false,
-      },
+    const { password, passwordLength, passwordStrength } = Generator.generate({
+      characterLength: 14,
+      useNumbers: true,
+      useSymbols: true,
+      useLowercase: true,
+      useUppercase: true,
+      excludeSimilarCharacters: true,
+      excludeTheseCharacters: "",
+      useStrict: false,
     });
 
     expect(passwordLength).toBe(14);
