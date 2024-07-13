@@ -1,4 +1,4 @@
-# Password Generator and Hasher
+# @kourosh-alasti/pwd-gen
 
 A package that provides functions for generating and hashing passwords, along with password strength evaluation. It uses the `generate-password-browser`, `bcrypt`, and `check-password-strength` libraries.
 
@@ -19,175 +19,177 @@ pnpm add @kourosh-alasti/pwd-gen
 or
 
 ```bash
+bun add @kourosh-alasti/pwd-gen
+```
+
+or
+
+```bash
 yarn add @kourosh-alasti/pwd-gen
 ```
 
 ## Usage
 
-The package exports the following functions:
+The package exports two classes:
 
-### `generate`
+### Generator
 
-Generates a password based on the provided options.
+> Import the Generator Class
 
-```javascript
-import { generate } from "@kourosh-alasti/pwd-gen";
-
-const options = {
-  characterLength: 12,
-  useNumbers: true,
-  useSymbols: true,
-  useLowercaseLetters: true,
-  useUppercaseLetters: true,
-  excludeSimilarCharacters: true,
-  excludeTheseCharacters: "",
-  strictCharacters: true,
-};
-
-const password = generate(options);
-console.log(password);
+```typescript
+import { Generator } from "@kourosh-alasti/pwd-gen";
 ```
 
-### `generateMultiple`
+> Generating a Password
 
-Generates multiple passwords based on the provided options.
+```typescript
+const { password, passwordLength, passwordStrengh } = Generator.generate({
+  characterLength: 15, // Integer
+  useNumbers: true, // Boolean
+  useSymbols: true, // Boolean
+  useLowercase: true, // Boolean
+  useUppercase: true, // Boolean
+  excludeSimilarCharacters: true, // Boolean
+  excludeTheseCharacters: "", // String
+  useStrict: true, // Boolean
+});
 
-```javascript
-import { generateMultiple } from "@kourosh-alasti/pwd-gen";
-
-const options = {
-  characterLength: 12,
-  useNumbers: true,
-  useSymbols: true,
-  useLowercaseLetters: true,
-  useUppercaseLetters: true,
-  excludeSimilarCharacters: true,
-  excludeTheseCharacters: "",
-  strictCharacters: true,
-};
-
-const passwords = generateMultiple(5, options);
-console.log(passwords);
+console.log(password); // @String
+console.log(passwordLength); // @Integer
+console.log(passwordStrength); // @String Enum { 'Too weak', 'Strong' }
 ```
 
-### `generateHashedPasswordSync`
+> Generate Multiple Passwords
 
-Generates a hashed password using bcrypt in a synchronous manner.
+```typescript
+import { Generator } from "@kourosh-alasti/pwd-gen";
 
-```javascript
-import { generateHashedPasswordSync } from "@kourosh-alasti/pwd-gen";
+const passwords = Generator.generateMultiple({
+  count: 10, // Integer
+  characterLength: 15, // Integer
+  useNumbers: true, // Boolean
+  useSymbols: true, // Boolean
+  useLowercase: true, // Boolean
+  useUppercase: true, // Boolean
+  excludeSimilarCharacters: true, // Boolean
+  excludeTheseCharacters: "", // String
+  useStrict: true, // Boolean
+});
 
-const options = {
-  characterLength: 12,
-  useNumbers: true,
-  useSymbols: true,
-  useLowercaseLetters: true,
-  useUppercaseLetters: true,
-  excludeSimilarCharacters: true,
-  excludeTheseCharacters: "",
-  strictCharacters: true,
-};
-
-const {
-  hashedPassword,
-  passwordStrength,
-  passwordLength,
-  hashedPassword,
-  salt,
-} = generateHashedPasswordSync({ options, saltRounds: 10 });
-
-console.log(hashedPassword);
+console.log(passwords); // @Array[password @string, passwordLength @Integer, passwordStrengh @String Enum { 'Too weak', 'Strong' }]
 ```
 
-### `compareHashedPasswordSync`
+### Hasher
 
-Compares a password with its hashed version using bcrypt in a synchronous manner.
+> Hash a password ( **Synchronous** )
 
-```javascript
-import { compareHashedPasswordSync } from "@kourosh-alasti/pwd-gen";
+```typescript
+import { Hasher } from "@kourosh-alasti/pwd-gen";
 
-const hashedPassword = "$2b$10$..."; // Replace with the actual hashed password
-const password = "userPassword";
-
-const { password, hashedPassword, isMatch } = compareHashedPasswordSync(
-  password,
-  hashedPassword
+const { hashedPassword, password, saltRounds } = Hasher.hashSync(
+  "testPassword",
+  12
 );
-console.log(isMatch);
+
+console.log(hashedPassword); // @String
+console.log(password); // @String
+console.log(saltRounds); // @Integer
 ```
 
-### `generateHashedPassword`
+> Hash a password ( **Asynchronous )**
 
-Generates a hashed password using bcrypt in an asynchronous manner.
+```typescript
+import { Hasher } from "@kourosh-alasti/pwd-gen";
 
-```javascript
-import { generateHashedPassword } from "@kourosh-alasti/pwd-gen";
-
-const options = {
-  characterLength: 12,
-  useNumbers: true,
-  useSymbols: true,
-  useLowercaseLetters: true,
-  useUppercaseLetters: true,
-  excludeSimilarCharacters: true,
-  excludeTheseCharacters: "",
-  strictCharacters: true,
-};
-
-const {
-  hashedPassword,
-  passwordStrength,
-  passwordLength,
-  hashedPassword,
-  salt,
-} = await generateHashedPassword({ options, saltRounds: 10 });
-
-console.log(hashedPassword);
-```
-
-### `compareHashedPassword`
-
-Compares a password with its hashed version using bcrypt in an asynchronous manner.
-
-```javascript
-import { compareHashedPassword } from "@kourosh-alasti/pwd-gen";
-
-const hashedPassword = "$2b$10$..."; // Replace with the actual hashed password
-const password = "userPassword";
-
-const { password, hashedPassword, isMatch } = await compareHashedPassword(
-  password,
-  hashedPassword
+const { hashedPassword, password, saltRounds } = await Hasher.hash(
+  "testPassword",
+  12
 );
-console.log(isMatch);
+
+console.log(hashedPassword); // @String
+console.log(password); // @String
+console.log(saltRounds); // @Integer
 ```
 
-### `hash`
+> Generate Hashed Password ( Synchronous )
 
-Hashes a password using bcrypt in an asynchronous manner.
+```typescript
+import { Hasher } from "@kourosh-alasti/pwd-gen";
 
-```javascript
-import { hash } from "@kourosh-alasti/pwd-gen";
+const { password, passwordLength, passwordStrength, hashedPassword, salt } =
+  Hasher.generateHashedPasswordSync({
+    characterLength: 15, // Integer
+    useNumbers: true, // Boolean
+    useSymbols: true, // Boolean
+    useLowercase: true, // Boolean
+    useUppercase: true, // Boolean
+    excludeSimilarCharacters: true, // Boolean
+    excludeTheseCharacters: "", // String
+    useStrict: true, // Boolean
+    saltRounds: 10, // Integer
+  });
 
-const pass = "userPassword";
-const saltRounds = 10;
-
-const { password, hashedPassword } = await hash(pass, saltRounds);
-console.log(hashedPassword);
+console.log(password); // @String
+console.log(passwordLength); // @Integer
+console.log(passwordStrength); // @String Enum { 'Too weak', 'Strong' }
+console.log(hashedPassword); // @String
+console.log(salt); // @Integer
 ```
 
-### `hashSync`
+> Generate Hashed Password ( Asynchronous)
 
-Hashes a password using bcrypt in a synchronous manner.
+```typescript
+import { Hasher } from "@kourosh-alasti/pwd-gen";
 
-```javascript
-import { hashSync } from "@kourosh-alasti/pwd-gen";
+const { password, passwordLength, passwordStrength, hashedPassword, salt } =
+  await Hasher.generateHashedPassword({
+    characterLength: 15, // Integer
+    useNumbers: true, // Boolean
+    useSymbols: true, // Boolean
+    useLowercase: true, // Boolean
+    useUppercase: true, // Boolean
+    excludeSimilarCharacters: true, // Boolean
+    excludeTheseCharacters: "", // String
+    useStrict: true, // Boolean
+    saltRounds: 10, // Integer
+  });
 
-const password = "userPassword";
-const saltRounds = 10;
+console.log(password); // @String
+console.log(passwordLength); // @Integer
+console.log(passwordStrength); // @String Enum { 'Too weak', 'Strong' }
+console.log(hashedPassword); // @String
+console.log(salt); // @Integer
+```
 
-const { password, hashedPassword } = hashSync(password, saltRounds);
-console.log(hashedPassword);
+> Compare Hashed Password ( Synchronous )
+
+```typescript
+import { Hasher } from "@kourosh-alasti/pwd-gen";
+
+const { password, hashedPassword, isMatch } = Hasher.compareHashedPasswordSync({
+  password: pwd,
+  hashedPassword: hash,
+});
+
+console.log(password); // @String
+console.log(hashedPassword); // @String
+console.log(isMatch); // @Boolean
+```
+
+> Compare Hashed Password ( Asynchronous )
+
+```typescript
+import { Hasher } from "@kourosh-alasti/pwd-gen";
+
+const { password, hashedPassword, isMatch } =
+  await Hasher.compareHashedPasswordSync({
+    password: pwd,
+    hashedPassword: hash,
+  });
+
+console.log(password); // @String
+console.log(hashedPassword); // @String
+console.log(isMatch); // @Boolean
 ```
 
 ## Contributing
@@ -201,15 +203,3 @@ This package is licensed under the MIT License.
 ## Author
 
 This package was developed by Kourosh Alasti <coding@kouroshalasti.com>.
-
-## Project Structure
-
-The project is organized into a root directory containing several essential files and two main directories: 'src' and 'tests'. The root directory also includes several Markdown files (CODE_OF_CONDUCT.md, CONTRIBUTING.md, LICENSE, README.md, and SECURITY.md) that provide important information about the project.
-
-Key Directories and Files:
-
-1. **'src' Directory:** This directory contains the main source code files for the project. It includes two JavaScript files: 'index.d.ts' (a TypeScript declaration file) and 'index.ts' (the main TypeScript file).
-2. **'tests' Directory:** This directory contains several test files for the project, organized by functionality. The 'tests' directory includes several JavaScript test files: 'compare-hash.test.js', 'generate-hash.test.js', 'generate.test.js', 'hash.test.js', 'multiple.test.js', and 'utility.js'.
-3. **'package.json' and 'pnpm-lock.yaml':** These files are essential for managing dependencies and package lock information for the project.
-4. **'babel.config.cjs' and 'tsconfig.json':** These are configuration files for Babel and TypeScript, respectively, which help in transpiling and type-checking the code.
-5. **'example.js' and 'main.js':** These are two additional JavaScript files in the root directory, which might be entry points for the application or contain additional code snippets.

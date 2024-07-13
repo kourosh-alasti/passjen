@@ -1,20 +1,18 @@
-import { generateHashedPassword, generateHashedPasswordSync } from "../src";
 import { describe, expect, test } from "@jest/globals";
+import { Hasher } from "../src";
 
 describe("Generate Hashed Password Suite", () => {
   test("generates a hashed password of length 15 synchronously", () => {
     const { password, passwordLength, passwordStrength, hashedPassword, salt } =
-      generateHashedPasswordSync({
-        options: {
-          characterLength: 15,
-          useNumbers: true,
-          useSymbols: true,
-          useLowercase: true,
-          useUppercase: true,
-          excludeSimilarCharacters: true,
-          excludeTheseCharacters: "",
-          useStrict: true,
-        },
+      Hasher.generateHashedPasswordSync({
+        characterLength: 15,
+        useNumbers: true,
+        useSymbols: true,
+        useLowercase: true,
+        useUppercase: true,
+        excludeSimilarCharacters: true,
+        excludeTheseCharacters: "",
+        useStrict: true,
       });
 
     expect(passwordLength).toBe(15);
@@ -28,17 +26,15 @@ describe("Generate Hashed Password Suite", () => {
 
   test("generates a hashed password of length 15 asynchronously", async () => {
     const { password, passwordLength, passwordStrength, hashedPassword, salt } =
-      await generateHashedPassword({
-        options: {
-          characterLength: 15,
-          useNumbers: true,
-          useSymbols: true,
-          useLowercase: true,
-          useUppercase: true,
-          excludeSimilarCharacters: true,
-          excludeTheseCharacters: "",
-          useStrict: true,
-        },
+      await Hasher.generateHashedPassword({
+        characterLength: 15,
+        useNumbers: true,
+        useSymbols: true,
+        useLowercase: true,
+        useUppercase: true,
+        excludeSimilarCharacters: true,
+        excludeTheseCharacters: "",
+        useStrict: true,
         saltRounds: 14,
       });
 
