@@ -50,7 +50,7 @@ class Hasher {
     };
   }
 
-  static async compareHashedPassword({
+  static async compare({
     password,
     hashedPassword,
     salt,
@@ -73,7 +73,7 @@ class Hasher {
     return derivedHash === hashedPassword;
   }
 
-  static compareHashedPasswordSync({
+  static compareSync({
     password,
     hashedPassword,
     salt,
