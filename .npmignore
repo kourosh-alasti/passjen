@@ -1,0 +1,15 @@
+.git
+.github
+node_modules
+src
+test
+
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+LICENSE
+SECURITY.md
+.gitignore
+.npmignore
+package-lock.json
+tsconfig.json
+tsup.config.ts

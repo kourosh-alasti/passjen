@@ -1,31 +1,96 @@
-import bcrypt from "bcrypt";
+import crypto from "crypto";
 import Generator, { GeneratedResults, GenerateOptions } from "./generator";
 
 export interface HashedResults {
   hashedPassword: string;
   password: string;
+  salt: string;
   saltRounds: number;
 }
 
 class Hasher {
-  static async hash(password: string, saltRounds = 10): Promise<HashedResults> {
-    const hashedPwd = await bcrypt.hash(password, saltRounds);
+  static async hash(
+    password: string,
+    saltRounds = 10,
+    encryption = "sha256"
+  ): Promise<HashedResults> {
+    const salt = crypto.randomBytes(16).toString("hex");
+
+    const hashedPassword = await new Promise<string>((resolve, reject) => {
+      crypto.pbkdf2(password, salt, saltRounds, 64, encryption, (err, key) => {
+        if (err) return reject(err);
+        resolve(key.toString("hex"));
+      });
+    });
 
     return {
-      hashedPassword: hashedPwd,
-      password: password,
-      saltRounds: saltRounds,
+      hashedPassword,
+      password,
+      salt,
+      saltRounds,
     };
   }
 
-  static hashSync(password: string, saltRounds = 10): HashedResults {
-    const hashedPwd = bcrypt.hashSync(password, saltRounds);
+  static hashSync(
+    password: string,
+    saltRounds = 10,
+    encryption = "sha256"
+  ): HashedResults {
+    const salt = crypto.randomBytes(16).toString("hex");
+
+    const hashedPassword = crypto
+      .pbkdf2Sync(password, salt, saltRounds, 64, encryption)
+      .toString("hex");
 
     return {
-      hashedPassword: hashedPwd,
-      password: password,
-      saltRounds: saltRounds,
+      hashedPassword,
+      password,
+      salt,
+      saltRounds,
     };
+  }
+
+  static async compare({
+    password,
+    hashedPassword,
+    salt,
+    saltRounds = 10,
+    encryption = "sha256",
+  }: {
+    password: string;
+    hashedPassword: string;
+    salt: string;
+    saltRounds: number;
+    encryption?: string;
+  }): Promise<boolean> {
+    const derivedHash = await new Promise<string>((resolve, reject) =>
+      crypto.pbkdf2(password, salt, saltRounds, 64, encryption, (err, key) => {
+        if (err) return reject(err);
+        resolve(key.toString("hex"));
+      })
+    );
+
+    return derivedHash === hashedPassword;
+  }
+
+  static compareSync({
+    password,
+    hashedPassword,
+    salt,
+    saltRounds = 10,
+    encryption = "sha256",
+  }: {
+    password: string;
+    hashedPassword: string;
+    salt: string;
+    saltRounds: number;
+    encryption?: string;
+  }): boolean {
+    const derivedHash = crypto
+      .pbkdf2Sync(password, salt, saltRounds, 64, encryption)
+      .toString("hex");
+
+    return derivedHash === hashedPassword;
   }
 
   static async generateHashedPassword({
@@ -50,12 +115,16 @@ class Hasher {
       useStrict,
     });
 
-    const { hashedPassword } = await this.hash(password.password, saltRounds);
+    const { hashedPassword, salt } = await this.hash(
+      password.password,
+      saltRounds
+    );
 
     return {
       ...password,
       hashedPassword,
-      salt: saltRounds,
+      salt,
+      saltRounds,
     };
   }
 
@@ -81,44 +150,16 @@ class Hasher {
       useStrict,
     });
 
-    const { hashedPassword } = this.hashSync(password.password, saltRounds);
+    const { hashedPassword, salt } = this.hashSync(
+      password.password,
+      saltRounds
+    );
 
     return {
       ...password,
       hashedPassword,
-      salt: saltRounds,
-    };
-  }
-
-  static async compareHashedPassword({
-    password,
-    hashedPassword,
-  }: {
-    password: string;
-    hashedPassword: string;
-  }) {
-    const isMatch: boolean = await bcrypt.compare(password, hashedPassword);
-
-    return {
-      password,
-      hashedPassword,
-      isMatch,
-    };
-  }
-
-  static compareHashedPasswordSync({
-    password,
-    hashedPassword,
-  }: {
-    password: string;
-    hashedPassword: string;
-  }) {
-    const isMatch: boolean = bcrypt.compareSync(password, hashedPassword);
-
-    return {
-      password,
-      hashedPassword,
-      isMatch,
+      salt,
+      saltRounds,
     };
   }
 }
