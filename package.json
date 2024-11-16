@@ -1,7 +1,7 @@
 {
-  "name": "@kourosh-alasti/pwd-gen",
-  "version": "1.4.0",
-  "description": "Password Generator and Hasher for Node.JS",
+  "name": "passjen",
+  "version": "2.0.0",
+  "description": "Lightweight password generator and hasher.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -21,12 +21,12 @@
   ],
   "author": "Kourosh Alasti <coding@kouroshalasti.com>",
   "bugs": {
-    "url": "https://github.com/AlastiSolutions/pwd-gen/issues"
+    "url": "https://github.com/kourosh-alasti/passjen/issues"
   },
-  "homepage": "https://github.com/AlastiSolutions/pwd-gen",
+  "homepage": "https://github.com/kourosh-alasti/passjen",
   "repository": {
     "type": "github",
-    "url": "https://github.com/AlastiSolutions/pwd-gen"
+    "url": "https://github.com/kourosh-alasti/passjen"
   },
   "license": "MIT",
   "devDependencies": {
