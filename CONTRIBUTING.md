@@ -1,4 +1,4 @@
-# Contributing to @kourosh-alasti/pwd-gen
+# Contributing to passjen
 
 First off, thank you for considering contributing to this project! Your contributions are greatly appreciated and help make this package better for everyone.
 

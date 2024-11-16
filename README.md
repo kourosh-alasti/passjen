@@ -1,31 +1,31 @@
-# @kourosh-alasti/pwd-gen
+# passjen
 
-A package that provides functions for generating and hashing passwords, along with password strength evaluation. It uses the `generate-password-browser`, `bcrypt`, and `check-password-strength` libraries.
+A package that provides functions for generating and hashing passwords, along with password strength evaluation. It uses the `generate-password-browser` and `check-password-strength` libraries.
 
 ## Installation
 
 To install the package, you can use npm or yarn:
 
 ```bash
-npm install @kourosh-alasti/pwd-gen
+npm install passjen
 ```
 
 or
 
 ```bash
-pnpm add @kourosh-alasti/pwd-gen
+pnpm add passjen
 ```
 
 or
 
 ```bash
-bun add @kourosh-alasti/pwd-gen
+bun add passjen
 ```
 
 or
 
 ```bash
-yarn add @kourosh-alasti/pwd-gen
+yarn add passjen
 ```
 
 ## Usage
@@ -37,7 +37,7 @@ The package exports two classes:
 > Import the Generator Class
 
 ```typescript
-import { Generator } from "@kourosh-alasti/pwd-gen";
+import { Generator } from "passjen";
 ```
 
 > Generating a Password
@@ -62,7 +62,7 @@ console.log(passwordStrength); // @String Enum { 'Too weak', 'Strong' }
 > Generate Multiple Passwords
 
 ```typescript
-import { Generator } from "@kourosh-alasti/pwd-gen";
+import { Generator } from "passjen";
 
 const passwords = Generator.generateMultiple({
   count: 10, // Integer
@@ -84,37 +84,40 @@ console.log(passwords); // @Array[password @string, passwordLength @Integer, pas
 > Hash a password ( **Synchronous** )
 
 ```typescript
-import { Hasher } from "@kourosh-alasti/pwd-gen";
+import { Hasher } from "passjen";
 
-const { hashedPassword, password, saltRounds } = Hasher.hashSync(
+const { hashedPassword, password, salt, saltRounds } = Hasher.hashSync(
   "testPassword",
-  12
+  12,
+  "sha256"
 );
 
 console.log(hashedPassword); // @String
 console.log(password); // @String
+console.log(salt); // @String
 console.log(saltRounds); // @Integer
 ```
 
 > Hash a password ( **Asynchronous )**
 
 ```typescript
-import { Hasher } from "@kourosh-alasti/pwd-gen";
+import { Hasher } from "passjen";
 
-const { hashedPassword, password, saltRounds } = await Hasher.hash(
+const { hashedPassword, password, salt, saltRounds } = await Hasher.hash(
   "testPassword",
   12
 );
 
 console.log(hashedPassword); // @String
 console.log(password); // @String
+console.log(salt); // @String
 console.log(saltRounds); // @Integer
 ```
 
-> Generate Hashed Password ( Synchronous )
+> Generate Hashed Password ( Synchronous ) **BROKEN**
 
 ```typescript
-import { Hasher } from "@kourosh-alasti/pwd-gen";
+import { Hasher } from "passjen";
 
 const { password, passwordLength, passwordStrength, hashedPassword, salt } =
   Hasher.generateHashedPasswordSync({
@@ -136,10 +139,10 @@ console.log(hashedPassword); // @String
 console.log(salt); // @Integer
 ```
 
-> Generate Hashed Password ( Asynchronous)
+> Generate Hashed Password ( Asynchronous) **BROKEN**
 
 ```typescript
-import { Hasher } from "@kourosh-alasti/pwd-gen";
+import { Hasher } from "passjen";
 
 const { password, passwordLength, passwordStrength, hashedPassword, salt } =
   await Hasher.generateHashedPassword({
@@ -161,34 +164,35 @@ console.log(hashedPassword); // @String
 console.log(salt); // @Integer
 ```
 
-> Compare Hashed Password ( Synchronous )
+> Compare Password ( Synchronous )
 
 ```typescript
-import { Hasher } from "@kourosh-alasti/pwd-gen";
+import { Hasher } from "passjen";
 
-const { password, hashedPassword, isMatch } = Hasher.compareHashedPasswordSync({
+const isMatch = Hasher.compareSync({
   password: pwd,
   hashedPassword: hash,
+  salt: salt,
+  saltRounds: 10,
+  encryption: "sha256",
 });
 
-console.log(password); // @String
-console.log(hashedPassword); // @String
 console.log(isMatch); // @Boolean
 ```
 
-> Compare Hashed Password ( Asynchronous )
+> Compare Password ( Asynchronous )
 
 ```typescript
-import { Hasher } from "@kourosh-alasti/pwd-gen";
+import { Hasher } from "passjen";
 
-const { password, hashedPassword, isMatch } =
-  await Hasher.compareHashedPasswordSync({
-    password: pwd,
-    hashedPassword: hash,
-  });
+const { password, hashedPassword, isMatch } = await Hasher.compare({
+  password: pwd,
+  hashedPassword: hash,
+  salt: salt,
+  saltRounds: 10,
+  encryption: "sha256",
+});
 
-console.log(password); // @String
-console.log(hashedPassword); // @String
 console.log(isMatch); // @Boolean
 ```
 
