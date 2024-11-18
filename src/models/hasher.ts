@@ -1,7 +1,7 @@
-import crypto from "crypto";
+import crypto from "node:crypto";
 import Generator, { GeneratedResults, GenerateOptions } from "./generator";
 
-export interface HashedResults {
+interface HashedResults {
   hashedPassword: string;
   password: string;
   salt: string;

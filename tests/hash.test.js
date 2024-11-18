@@ -1,7 +1,7 @@
 import { Hasher } from "../src";
 import { describe, expect, test } from "@jest/globals";
 
-describe("Hashing Suite", () => {
+describe("Hashing Test Suite", () => {
   test("hashes a password with default salt synchronously", () => {
     const { hashedPassword, password, saltRounds } =
       Hasher.hashSync("testPassword");
