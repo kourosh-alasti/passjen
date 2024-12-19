@@ -6,6 +6,3 @@
 
 # Git Config
 /.git
-
-# Outdated Test
-/tests/update
