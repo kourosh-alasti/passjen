@@ -60,7 +60,7 @@ class Hasher {
     password: string;
     hashedPassword: string;
     salt: string;
-    saltRounds: number;
+    saltRounds?: number;
     encryption?: string;
   }): Promise<boolean> {
     const derivedHash = await new Promise<string>((resolve, reject) =>
@@ -83,7 +83,7 @@ class Hasher {
     password: string;
     hashedPassword: string;
     salt: string;
-    saltRounds: number;
+    saltRounds?: number;
     encryption?: string;
   }): boolean {
     const derivedHash = crypto
