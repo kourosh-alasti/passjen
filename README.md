@@ -1,209 +1,126 @@
-# passjen
+# PassJen
 
-A package that provides functions for generating and hashing passwords, along with password strength evaluation. It uses the `generate-password-browser` and `check-password-strength` libraries.
+A Zero Dependency, secure password generator and hasher for TypeScript/JavaScript applications.
+
+## Features
+
+- 🔐 Generate secure passwords with customizable options
+- 🔒 Hash passwords using crypto's pbkdf2
+- ⚡ Synchronous and asynchronous methods
+- 🎯 Zero dependencies
+- 📊 Password strength assessment
+- 🛡️ Strict mode for guaranteed character inclusion
+- 🔄 Salt generation and management
 
 ## Installation
-
-To install the package, you can use npm or yarn:
 
 ```bash
 npm install passjen
 ```
 
-or
-
-```bash
-pnpm add passjen
-```
-
-or
-
-```bash
-bun add passjen
-```
-
-or
-
-```bash
-yarn add passjen
-```
-
 ## Usage
 
-The package exports two classes:
-
-### Generator
-
-> Import the Generator Class
+### Password Generation
 
 ```typescript
-import { Generator } from "passjen";
-```
+import { Generator } from 'passjen';
 
-> Generating a Password
+// Generate a password with default options
+const result = Generator.generate({});
+console.log(result.password); // 6-character password
+console.log(result.passwordStrength); // Password strength rating
 
-```typescript
-const { password, passwordLength, passwordStrengh } = Generator.generate({
-  characterLength: 15, // Integer
-  useNumbers: true, // Boolean
-  useSymbols: true, // Boolean
-  useLowercase: true, // Boolean
-  useUppercase: true, // Boolean
-  excludeSimilarCharacters: true, // Boolean
-  excludeTheseCharacters: "", // String
-  useStrict: true, // Boolean
+// Generate a strong password
+const strongPassword = Generator.generate({
+  characterLength: 12,
+  useNumbers: true,
+  useSymbols: true,
+  useLowercase: true,
+  useUppercase: true,
+  useStrict: true
 });
 
-console.log(password); // @String
-console.log(passwordLength); // @Integer
-console.log(passwordStrength); // @String Enum { 'Too weak', 'Strong' }
+// Generate a password excluding similar characters
+const unambiguousPassword = Generator.generate({
+  characterLength: 10,
+  useNumbers: true,
+  useLowercase: true,
+  excludeSimilarCharacters: true // Excludes i, l, 1, L, o, 0, etc.
+});
 ```
 
-> Generate Multiple Passwords
+### Password Hashing
 
 ```typescript
-import { Generator } from "passjen";
+import { Hasher } from 'passjen';
 
-const passwords = Generator.generateMultiple({
-  count: 10, // Integer
-  characterLength: 15, // Integer
-  useNumbers: true, // Boolean
-  useSymbols: true, // Boolean
-  useLowercase: true, // Boolean
-  useUppercase: true, // Boolean
-  excludeSimilarCharacters: true, // Boolean
-  excludeTheseCharacters: "", // String
-  useStrict: true, // Boolean
+// Async hashing
+const hashedResult = await Hasher.hash('myPassword');
+console.log(hashedResult.hashedPassword);
+console.log(hashedResult.salt);
+
+// Sync hashing
+const hashedResultSync = Hasher.hashSync('myPassword');
+
+// Password comparison (async)
+const isMatch = await Hasher.compare({
+  password: 'myPassword',
+  hashedPassword: hashedResult.hashedPassword,
+  salt: hashedResult.salt,
+  saltRounds: hashedResult.saltRounds
 });
 
-console.log(passwords); // @Array[password @string, passwordLength @Integer, passwordStrengh @String Enum { 'Too weak', 'Strong' }]
-```
-
-### Hasher
-
-> Hash a password ( **Synchronous** )
-
-```typescript
-import { Hasher } from "passjen";
-
-const { hashedPassword, password, salt, saltRounds } = Hasher.hashSync(
-  "testPassword",
-  12,
-  "sha256"
-);
-
-console.log(hashedPassword); // @String
-console.log(password); // @String
-console.log(salt); // @String
-console.log(saltRounds); // @Integer
-```
-
-> Hash a password ( **Asynchronous )**
-
-```typescript
-import { Hasher } from "passjen";
-
-const { hashedPassword, password, salt, saltRounds } = await Hasher.hash(
-  "testPassword",
-  12
-);
-
-console.log(hashedPassword); // @String
-console.log(password); // @String
-console.log(salt); // @String
-console.log(saltRounds); // @Integer
-```
-
-> Generate Hashed Password ( Synchronous ) **BROKEN**
-
-```typescript
-import { Hasher } from "passjen";
-
-const { password, passwordLength, passwordStrength, hashedPassword, salt } =
-  Hasher.generateHashedPasswordSync({
-    characterLength: 15, // Integer
-    useNumbers: true, // Boolean
-    useSymbols: true, // Boolean
-    useLowercase: true, // Boolean
-    useUppercase: true, // Boolean
-    excludeSimilarCharacters: true, // Boolean
-    excludeTheseCharacters: "", // String
-    useStrict: true, // Boolean
-    saltRounds: 10, // Integer
-  });
-
-console.log(password); // @String
-console.log(passwordLength); // @Integer
-console.log(passwordStrength); // @String Enum { 'Too weak', 'Strong' }
-console.log(hashedPassword); // @String
-console.log(salt); // @Integer
-```
-
-> Generate Hashed Password ( Asynchronous) **BROKEN**
-
-```typescript
-import { Hasher } from "passjen";
-
-const { password, passwordLength, passwordStrength, hashedPassword, salt } =
-  await Hasher.generateHashedPassword({
-    characterLength: 15, // Integer
-    useNumbers: true, // Boolean
-    useSymbols: true, // Boolean
-    useLowercase: true, // Boolean
-    useUppercase: true, // Boolean
-    excludeSimilarCharacters: true, // Boolean
-    excludeTheseCharacters: "", // String
-    useStrict: true, // Boolean
-    saltRounds: 10, // Integer
-  });
-
-console.log(password); // @String
-console.log(passwordLength); // @Integer
-console.log(passwordStrength); // @String Enum { 'Too weak', 'Strong' }
-console.log(hashedPassword); // @String
-console.log(salt); // @Integer
-```
-
-> Compare Password ( Synchronous )
-
-```typescript
-import { Hasher } from "passjen";
-
-const isMatch = Hasher.compareSync({
-  password: pwd,
-  hashedPassword: hash,
-  salt: salt,
-  saltRounds: 10,
-  encryption: "sha256",
+// Generate and hash a password in one step
+const generatedHash = await Hasher.generateHashedPassword({
+  characterLength: 12,
+  useNumbers: true,
+  useSymbols: true,
+  useLowercase: true,
+  useUppercase: true,
+  useStrict: true,
+  saltRounds: 10
 });
-
-console.log(isMatch); // @Boolean
 ```
 
-> Compare Password ( Asynchronous )
+## API Reference
 
-```typescript
-import { Hasher } from "passjen";
+### Generator Options
 
-const { password, hashedPassword, isMatch } = await Hasher.compare({
-  password: pwd,
-  hashedPassword: hash,
-  salt: salt,
-  saltRounds: 10,
-  encryption: "sha256",
-});
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| characterLength | number | 6 | Length of the generated password |
+| useNumbers | boolean | false | Include numbers (0-9) |
+| useSymbols | boolean | false | Include symbols (!@#$%^&*()_+-=[]{}\|;:,.<>?) |
+| useLowercase | boolean | false | Include lowercase letters (a-z) |
+| useUppercase | boolean | false | Include uppercase letters (A-Z) |
+| excludeSimilarCharacters | boolean | false | Exclude similar characters (ilLI\|`oO0) |
+| excludeTheseCharacters | string | "" | Custom characters to exclude |
+| useStrict | boolean | false | Ensure at least one character from each selected type |
 
-console.log(isMatch); // @Boolean
-```
+### Password Strength Levels
 
-## Contributing
+The password strength is calculated based on:
+- Length (8+ chars for basic strength, 12+ for better strength)
+- Character variety (numbers, lowercase, uppercase, symbols)
+- Overall complexity
 
-Contributions are welcome. If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
+Strength levels:
+- **Too weak**: Very short or simple passwords
+- **Weak**: Longer passwords with limited character types
+- **Medium**: Medium-length passwords with some character types
+- **Strong**: Complex passwords with multiple character types and sufficient length
+
+### Hasher Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| saltRounds | number | 10 | Number of iterations for PBKDF2 |
+| encryption | string | "sha256" | Hash algorithm to use |
+
+## Security
+
+PassJen uses Node's native `crypto` module with PBKDF2 for password hashing. The generator creates cryptographically secure random passwords when strict mode is enabled.
 
 ## License
 
-This package is licensed under the MIT License.
-
-## Author
-
-This package was developed by Kourosh Alasti <coding@kouroshalasti.com>.
+MIT License - see LICENSE file for details
